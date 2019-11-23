@@ -346,6 +346,96 @@ class GildedRoseTest {
 
         assertEquals(70, gildedRose.items[0].quality)
     }
+
+    @Test
+    fun conjured_withSomeQuality_degradesQualityByTwo() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", 1, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(8, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun conjured_withQualityTwo_degradesQualityToZero() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", 1, 2)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun conjured_withQualityOne_degradesQualityToZero() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", 1, 2)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun conjured_withQualityZero_doesNotChangeQuality() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", 1, 2)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun conjured_withSellInZero_degradesQualityByFour() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", 0, 5)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(1, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun conjured_withSellInZeroAndSmallQuality_degradesQualityToZero() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", 0, 2)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun conjured_withNegativeSellIn_degradesQualityByFour() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", -3, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(6, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun conjured_withPositiveSellIn_degradesSellInByOne() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", 5, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(4, gildedRose.items[0].sellIn)
+    }
+
+    @Test
+    fun conjured_withNegativeSellIn_degradesSellInByOne() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", -5, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(-6, gildedRose.items[0].sellIn)
+    }
+
+    @Test
+    fun conjured_withSellInZero_degradesSellInByOne() {
+        val gildedRose = GildedRose(arrayOf(Item("Conjured", 0, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].sellIn)
+    }
 }
 
 
