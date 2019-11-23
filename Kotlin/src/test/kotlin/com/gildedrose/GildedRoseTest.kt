@@ -94,6 +94,33 @@ class GildedRoseTest {
 
         assertEquals(-1, gildedRose.items[0].sellIn)
     }
+
+    @Test
+    fun agedBrie_withSomeQuality_increasesQualityByOne() {
+        val gildedRose = GildedRose(arrayOf(Item("Aged Brie", 3, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(11, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun agedBrie_withQualityZero_increasesQualityByTwo() {
+        val gildedRose = GildedRose(arrayOf(Item("Aged Brie", 0, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(12, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun agedBrie_withNegativeQuality_increasesQualityByTwo() {
+        val gildedRose = GildedRose(arrayOf(Item("Aged Brie", -19, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(12, gildedRose.items[0].quality)
+    }
 }
 
 
