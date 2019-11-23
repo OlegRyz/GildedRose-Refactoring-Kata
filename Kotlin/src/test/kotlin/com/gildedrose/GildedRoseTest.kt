@@ -139,6 +139,24 @@ class GildedRoseTest {
 
         assertEquals(50, gildedRose.items[0].quality)
     }
+
+    @Test
+    fun agedBrie_withMoreThanMaximumQuality_doesNotIncreaseQuality() {
+        val gildedRose = GildedRose(arrayOf(Item("Aged Brie", 15, 70)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(70, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun agedBrie_withMoreThanMaximumQualityAndNegativeSellIn_doesNotIncreaseQuality() {
+        val gildedRose = GildedRose(arrayOf(Item("Aged Brie", -10, 70)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(70, gildedRose.items[0].quality)
+    }
 }
 
 
