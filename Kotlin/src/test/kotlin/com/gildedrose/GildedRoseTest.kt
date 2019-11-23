@@ -69,6 +69,24 @@ class GildedRoseTest {
     }
 
     @Test
+    fun someGood_withNegtiveSellIn_degradesQualityByTwo() {
+        val gildedRose = GildedRose(arrayOf(Item("some good", -10, 10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(8, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun someGood_withNegtiveSellInAndQualityOne_degradesQualityToZero() {
+        val gildedRose = GildedRose(arrayOf(Item("some good", -10, 1)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].quality)
+    }
+
+    @Test
     fun someGood_withNegativeQuality_DoesNotDegradeQuality() {
         val gildedRose = GildedRose(arrayOf(Item("some good", 0, -21)))
 
