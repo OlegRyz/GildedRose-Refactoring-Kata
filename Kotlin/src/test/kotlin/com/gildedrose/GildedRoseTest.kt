@@ -157,6 +157,33 @@ class GildedRoseTest {
 
         assertEquals(70, gildedRose.items[0].quality)
     }
+
+    @Test
+    fun sulfuras_withNegativeSellIn_doesNotDecreaseQuality() {
+        val gildedRose = GildedRose(arrayOf(Item("Sulfuras, Hand of Ragnaros", -10, 80)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(80, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun sulfuras_withPositiveSellIn_doesNotDecreaseQuality() {
+        val gildedRose = GildedRose(arrayOf(Item("Sulfuras, Hand of Ragnaros", 15, 80)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(80, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun sulfuras_withSellInZero_doesNotDecreaseQuality() {
+        val gildedRose = GildedRose(arrayOf(Item("Sulfuras, Hand of Ragnaros", 0, 80)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(80, gildedRose.items[0].quality)
+    }
 }
 
 
