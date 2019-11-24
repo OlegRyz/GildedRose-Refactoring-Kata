@@ -45,6 +45,8 @@ class Sulfuras(item: Item) : ItemWrapper(item) {
 }
 
 sealed class ItemWrapper(private val item: Item) {
+    @Deprecated("Allowed quality range should not be overridden anymore. " +
+                "Currently overriding this range is allowed only for backward compatibility with legacy code.")
     open val allowedQualityRange = 0..50
 
     open fun moveSellInDate() {
