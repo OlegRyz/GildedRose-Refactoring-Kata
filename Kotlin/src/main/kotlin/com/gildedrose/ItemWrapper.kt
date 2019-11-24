@@ -10,8 +10,9 @@ fun wrap(it: Item): ItemWrapper {
 }
 
 class AgedBrie(item: Item) : ItemWrapper(item) {
+    val allowedQualityRange = Int.MIN_VALUE..50
     override fun degrade() {
-        if (item.quality < 50) {
+        if (item.quality in allowedQualityRange) {
             item.quality = item.quality + 1
             if (item.sellIn <= 0) {
                 item.quality = item.quality + 1
@@ -22,9 +23,9 @@ class AgedBrie(item: Item) : ItemWrapper(item) {
 }
 
 class BackStage(item: Item) : ItemWrapper(item) {
-
+    val allowedQualityRange = Int.MIN_VALUE..50
     override fun degrade() {
-        if (item.quality < 50) {
+        if (item.quality in allowedQualityRange) {
             item.quality = item.quality + when (item.sellIn) {
                 in 6..10 -> 2
                 in 0..5 -> 3
@@ -39,8 +40,9 @@ class BackStage(item: Item) : ItemWrapper(item) {
 }
 
 class SomeGood(item: Item) : ItemWrapper(item) {
+    val allowedQualityRange = 0..Int.MAX_VALUE
     override fun degrade() {
-        if (item.quality > 0) {
+        if (item.quality in allowedQualityRange) {
             item.quality = item.quality - 1
             if (item.sellIn <= 0) {
                 item.quality = item.quality - 1
