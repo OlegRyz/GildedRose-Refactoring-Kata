@@ -1,9 +1,9 @@
 package com.gildedrose
 
-class BackStage(private val item: Item) {
+class BackStage(private val item: Item): ItemWrapper {
     private val qualityRange = 0..50
 
-    fun degrade() {
+    override fun degrade() {
         if (item.quality < 50) {
             item.quality = item.quality + when (item.sellIn) {
                 in 6..10 -> 2

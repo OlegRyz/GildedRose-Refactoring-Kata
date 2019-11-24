@@ -1,7 +1,7 @@
 package com.gildedrose
 
-class AgedBrie(val item: Item) {
-    fun degrade() {
+class AgedBrie(val item: Item): ItemWrapper {
+    override fun degrade() {
         if (item.quality < 50) {
             item.quality = item.quality + 1
         }
