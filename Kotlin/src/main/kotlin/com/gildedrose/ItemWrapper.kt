@@ -45,12 +45,13 @@ class SomeGood(item: Item) : ItemWrapper(item) {
     val allowedQualityRange = 0..Int.MAX_VALUE
     override fun degrade() {
         if (item.quality in allowedQualityRange) {
-            item.quality = item.quality - 1
-            if (item.sellIn <= 0) {
-                item.quality = item.quality - 1
-            }
-            item.quality = item.quality.coerceAtLeast(0)
+            item.quality = (item.quality + qualityChange(item.sellIn)).coerceAtLeast(0)
         }
+    }
+
+    private fun qualityChange(sellIn: Int) = when {
+        sellIn <= 0 -> -2
+        else -> -1
     }
 }
 
