@@ -2,15 +2,10 @@ package com.gildedrose
 
 fun wrap(it: Item): ItemWrapper {
     return when (it.name) {
-        GildedRose.AGED_BRIE ->
-            AgedBrie(it)
-        GildedRose.BACKSTAGE ->
-            BackStage(it)
-        GildedRose.SULFURAS ->
-            Sulfuras(it)
-        else -> {
-            SomeGood(it)
-        }
+        GildedRose.AGED_BRIE -> AgedBrie(it)
+        GildedRose.BACKSTAGE -> BackStage(it)
+        GildedRose.SULFURAS -> Sulfuras(it)
+        else -> SomeGood(it)
     }
 }
 
@@ -39,7 +34,7 @@ class BackStage(item: Item) : ItemWrapper(item) {
             }
             item.quality = item.quality.coerceIn(qualityRange)
             if (item.sellIn <= 0) {
-                item.quality = item.quality - item.quality
+                item.quality = 0
             }
         }
     }
