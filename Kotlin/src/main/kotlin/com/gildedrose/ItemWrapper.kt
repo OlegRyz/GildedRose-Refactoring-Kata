@@ -10,31 +10,20 @@ fun wrap(it: Item): ItemWrapper {
 }
 
 class AgedBrie(item: Item) : ItemWrapper(item) {
-    val allowedQualityRange = Int.MIN_VALUE..50
-    override fun degrade() {
-        if (item.quality in allowedQualityRange) {
-            item.quality = (item.quality + qualityChange(item.sellIn)).coerceIn(allowedQualityRange)
-        }
-    }
+    override val allowedQualityRange = Int.MIN_VALUE..50
 
-    private fun qualityChange(sellIn: Int) = when {
+    override fun qualityChange(sellIn: Int) = when {
         sellIn <= 0 -> 2
         else -> 1
     }
 }
 
 class BackStage(item: Item) : ItemWrapper(item) {
-    val allowedQualityRange = Int.MIN_VALUE..50
-    override fun degrade() {
-        if (item.quality in allowedQualityRange) {
-            item.quality = (item.quality + qualityChange(item.sellIn)).coerceIn(allowedQualityRange)
-            if (item.sellIn <= 0) {
-                item.quality = 0
-            }
-        }
-    }
+    override val allowedQualityRange = Int.MIN_VALUE..50
 
-    private fun qualityChange(sellIn: Int) = when (sellIn) {
+    override fun qualityAfterSellIn(quality: Int) = 0
+
+    override fun qualityChange(sellIn: Int) = when (sellIn) {
         in 6..10 -> 2
         in 0..5 -> 3
         else -> 1
@@ -42,27 +31,36 @@ class BackStage(item: Item) : ItemWrapper(item) {
 }
 
 class SomeGood(item: Item) : ItemWrapper(item) {
-    val allowedQualityRange = 0..Int.MAX_VALUE
-    override fun degrade() {
-        if (item.quality in allowedQualityRange) {
-            item.quality = (item.quality + qualityChange(item.sellIn)).coerceIn(allowedQualityRange)
-        }
-    }
+    override val allowedQualityRange = 0..Int.MAX_VALUE
 
-    private fun qualityChange(sellIn: Int) = when {
+    override fun qualityChange(sellIn: Int) = when {
         sellIn <= 0 -> -2
         else -> -1
     }
 }
 
 class Sulfuras(item: Item) : ItemWrapper(item) {
-    override fun degrade() = Unit
     override fun moveSellInDate() = Unit
+    override fun qualityChange(sellIn: Int) = 0
 }
 
-sealed class ItemWrapper(val item: Item) {
-    abstract fun degrade()
+sealed class ItemWrapper(private val item: Item) {
+    open val allowedQualityRange = 0..50
+
     open fun moveSellInDate() {
         item.sellIn = item.sellIn - 1
+    }
+
+    abstract fun qualityChange(sellIn: Int): Int
+
+    open fun qualityAfterSellIn(quality: Int) = quality
+
+    fun degrade() {
+        if (item.quality in allowedQualityRange) {
+            item.quality = (item.quality + qualityChange(item.sellIn)).coerceIn(allowedQualityRange)
+            if (item.sellIn <= 0) {
+                item.quality = qualityAfterSellIn(item.quality)
+            }
+        }
     }
 }
