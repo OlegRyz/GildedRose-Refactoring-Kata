@@ -132,7 +132,7 @@ class GildedRoseTest {
     }
 
     @Test
-    fun agedBrie_withNegativeQuality_increasesQualityByTwo() {
+    fun agedBrie_withNegativeSellIn_increasesQualityByTwo() {
         val gildedRose = GildedRose(arrayOf(Item("Aged Brie", -19, 10)))
 
         gildedRose.updateQuality()
