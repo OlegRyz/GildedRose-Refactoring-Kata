@@ -44,14 +44,14 @@ class GildedRose(var items: Array<Item>) {
                         }
                     }
                     else -> {
-                        if (it.name != BACKSTAGE) {
+                        if (it.name == BACKSTAGE) {
+                            it.quality = it.quality - it.quality
+                        } else {
                             if (it.quality > 0) {
                                 if (it.name != SULFURAS) {
                                     it.quality = it.quality - 1
                                 }
                             }
-                        } else {
-                            it.quality = it.quality - it.quality
                         }
                     }
                 }
