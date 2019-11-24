@@ -8,14 +8,7 @@ class GildedRose(var items: Array<Item>) {
         items.forEach {
             when (it.name) {
                 AGED_BRIE -> {
-                    if (it.quality < 50) {
-                        it.quality = it.quality + 1
-                    }
-                    if (it.sellIn <= 0) {
-                        if (it.quality < 50) {
-                            it.quality = it.quality + 1
-                        }
-                    }
+                    AgedBrie(it).degrade()
                 }
                 BACKSTAGE ->
                     if (it.quality < 50) {
