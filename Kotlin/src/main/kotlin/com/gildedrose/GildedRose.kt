@@ -29,9 +29,7 @@ class GildedRose(var items: Array<Item>) {
                 }
             }
 
-            if (it.name != SULFURAS) {
-                it.sellIn = it.sellIn - 1
-            }
+            moveSellInDate(it)
 
 
             when (it.name) {
@@ -58,6 +56,13 @@ class GildedRose(var items: Array<Item>) {
             }
         }
     }
+
+    private fun moveSellInDate(it: Item) {
+        if (it.name != SULFURAS) {
+            it.sellIn = it.sellIn - 1
+        }
+    }
+
     companion object {
         const val AGED_BRIE = "Aged Brie"
         const val SULFURAS = "Sulfuras, Hand of Ragnaros"
