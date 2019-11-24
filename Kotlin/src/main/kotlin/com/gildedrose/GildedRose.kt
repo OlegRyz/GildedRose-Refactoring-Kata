@@ -24,11 +24,10 @@ class GildedRose(var items: Array<Item>) {
                             it.quality = it.quality.coerceIn(qualityRange)
                         }
                     }
+                SULFURAS -> Unit
                 else -> {
                     if (it.quality > 0) {
-                        if (it.name != SULFURAS) {
-                            it.quality = it.quality - 1
-                        }
+                        it.quality = it.quality - 1
                     }
                 }
             }
