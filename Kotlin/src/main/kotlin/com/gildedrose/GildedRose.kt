@@ -43,14 +43,11 @@ class GildedRose(var items: Array<Item>) {
                             it.quality = it.quality + 1
                         }
                     }
+                    BACKSTAGE -> it.quality = it.quality - it.quality
                     else -> {
-                        if (it.name == BACKSTAGE) {
-                            it.quality = it.quality - it.quality
-                        } else {
-                            if (it.quality > 0) {
-                                if (it.name != SULFURAS) {
-                                    it.quality = it.quality - 1
-                                }
+                        if (it.quality > 0) {
+                            if (it.name != SULFURAS) {
+                                it.quality = it.quality - 1
                             }
                         }
                     }
