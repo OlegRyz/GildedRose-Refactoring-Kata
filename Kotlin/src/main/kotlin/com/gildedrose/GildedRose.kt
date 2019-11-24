@@ -7,14 +7,7 @@ class GildedRose(var items: Array<Item>) {
     fun updateQuality() {
         items.forEach {
             when {
-                it.name != AGED_BRIE && it.name != BACKSTAGE -> {
-                    if (it.quality > 0) {
-                        if (it.name != SULFURAS) {
-                            it.quality = it.quality - 1
-                        }
-                    }
-                }
-                else -> {
+                it.name == AGED_BRIE || it.name == BACKSTAGE -> {
                     if (it.quality < 50) {
                         it.quality = it.quality + 1
 
@@ -27,6 +20,13 @@ class GildedRose(var items: Array<Item>) {
                                 }
                                 it.quality = it.quality.coerceIn(qualityRange)
                             }
+                        }
+                    }
+                }
+                else -> {
+                    if (it.quality > 0) {
+                        if (it.name != SULFURAS) {
+                            it.quality = it.quality - 1
                         }
                     }
                 }
