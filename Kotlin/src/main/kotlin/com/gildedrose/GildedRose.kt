@@ -2,8 +2,6 @@ package com.gildedrose
 
 class GildedRose(var items: Array<Item>) {
 
-    private val qualityRange = 0..50
-
     fun updateQuality() {
         items.forEach {
             when (it.name) {
@@ -11,17 +9,7 @@ class GildedRose(var items: Array<Item>) {
                     AgedBrie(it).degrade()
                 }
                 BACKSTAGE ->
-                    if (it.quality < 50) {
-                        it.quality = it.quality + when (it.sellIn) {
-                            in 6..10 -> 2
-                            in 0..5 -> 3
-                            else -> 1
-                        }
-                        it.quality = it.quality.coerceIn(qualityRange)
-                        if (it.sellIn <= 0) {
-                            it.quality = it.quality - it.quality
-                        }
-                    }
+                    BackStage(it).degrade()
                 SULFURAS -> Unit
                 else -> {
                     if (it.quality > 0) {
