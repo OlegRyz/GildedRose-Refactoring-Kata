@@ -38,7 +38,12 @@ class GildedRose(var items: Array<Item>) {
 
             if (it.sellIn < 0) {
                 when {
-                    it.name != AGED_BRIE -> {
+                    it.name == AGED_BRIE -> {
+                        if (it.quality < 50) {
+                            it.quality = it.quality + 1
+                        }
+                    }
+                    else -> {
                         if (it.name != BACKSTAGE) {
                             if (it.quality > 0) {
                                 if (it.name != SULFURAS) {
@@ -47,11 +52,6 @@ class GildedRose(var items: Array<Item>) {
                             }
                         } else {
                             it.quality = it.quality - it.quality
-                        }
-                    }
-                    else -> {
-                        if (it.quality < 50) {
-                            it.quality = it.quality + 1
                         }
                     }
                 }
