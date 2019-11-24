@@ -14,15 +14,12 @@ class GildedRose(var items: Array<Item>) {
                 }
                 BACKSTAGE ->
                     if (it.quality < 50) {
-                        it.quality = it.quality + 1
-                        if (it.quality < 50) {
-                            it.quality = it.quality + when (it.sellIn) {
-                                in 6..10 -> 1
-                                in 0..5 -> 2
-                                else -> 0
-                            }
-                            it.quality = it.quality.coerceIn(qualityRange)
+                        it.quality = it.quality + when (it.sellIn) {
+                            in 6..10 -> 2
+                            in 0..5 -> 3
+                            else -> 1
                         }
+                        it.quality = it.quality.coerceIn(qualityRange)
                     }
                 SULFURAS -> Unit
                 else -> {
