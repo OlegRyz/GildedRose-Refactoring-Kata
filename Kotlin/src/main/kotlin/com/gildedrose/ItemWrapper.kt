@@ -27,16 +27,17 @@ class BackStage(item: Item) : ItemWrapper(item) {
     val allowedQualityRange = Int.MIN_VALUE..50
     override fun degrade() {
         if (item.quality in allowedQualityRange) {
-            item.quality = item.quality + when (item.sellIn) {
-                in 6..10 -> 2
-                in 0..5 -> 3
-                else -> 1
-            }
-            item.quality = item.quality.coerceAtMost(50)
+            item.quality = (item.quality + qualityChange(item.sellIn)).coerceAtMost(50)
             if (item.sellIn <= 0) {
                 item.quality = 0
             }
         }
+    }
+
+    private fun qualityChange(sellIn: Int) = when (sellIn) {
+        in 6..10 -> 2
+        in 0..5 -> 3
+        else -> 1
     }
 }
 
