@@ -114,6 +114,15 @@ class BackstagePassesTest {
     }
 
     @Test
+    fun backstagePasses_withSellInZeroAndNegativeQuality_dropsToZero() {
+        val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 0, -10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].quality)
+    }
+
+    @Test
     fun backstagePasses_withNegativeSellIn_dropsQualityToZero() {
         val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", -15, 10)))
 
