@@ -114,6 +114,15 @@ class BackstagePassesTest {
     }
 
     @Test
+    fun backstagePasses_withSellInZeroAndNegativeQuality_dropsToZero() {
+        val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 0, -10)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].quality)
+    }
+
+    @Test
     fun backstagePasses_withNegativeSellIn_dropsQualityToZero() {
         val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", -15, 10)))
 
@@ -129,5 +138,59 @@ class BackstagePassesTest {
         gildedRose.updateQuality()
 
         assertEquals(70, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun backstagePasses_withNegativeQualityAndSellInMoreThanTen_increasesQualityByOne() {
+        val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 11, -70)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(-69, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun backstagePasses_withNegativeQualityAndSellInTen_increasesQualityByTwo() {
+        val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 10, -70)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(-68, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun backstagePasses_withNegativeQualityAndSellInMoreThanFive_increasesQualityByTwo() {
+        val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 6, -70)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(-68, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun backstagePasses_withNegativeQualityAndSellInFive_increasesQualityByThree() {
+        val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 5, -70)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(-67, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun backstagePasses_withNegativeQualityAndSellInLessThanFive_increasesQualityByThree() {
+        val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 2, -70)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(-67, gildedRose.items[0].quality)
+    }
+
+    @Test
+    fun backstagePasses_withNegativeQualityAndSellInZero_dropsQualityToZero() {
+        val gildedRose = GildedRose(arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 0, -70)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(0, gildedRose.items[0].quality)
     }
 }
