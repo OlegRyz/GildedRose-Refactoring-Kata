@@ -6,24 +6,27 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         items.forEach {
-            if (it.name != AGED_BRIE && it.name != BACKSTAGE) {
-                if (it.quality > 0) {
-                    if (it.name != SULFURAS) {
-                        it.quality = it.quality - 1
+            when {
+                it.name != AGED_BRIE && it.name != BACKSTAGE -> {
+                    if (it.quality > 0) {
+                        if (it.name != SULFURAS) {
+                            it.quality = it.quality - 1
+                        }
                     }
                 }
-            } else {
-                if (it.quality < 50) {
-                    it.quality = it.quality + 1
+                else -> {
+                    if (it.quality < 50) {
+                        it.quality = it.quality + 1
 
-                    if (it.name == BACKSTAGE) {
-                        if (it.quality < 50) {
-                            it.quality = it.quality + when (it.sellIn) {
-                                in 6..10 ->  1
-                                in 0..5 -> 2
-                                else -> 0
+                        if (it.name == BACKSTAGE) {
+                            if (it.quality < 50) {
+                                it.quality = it.quality + when (it.sellIn) {
+                                    in 6..10 ->  1
+                                    in 0..5 -> 2
+                                    else -> 0
+                                }
+                                it.quality = it.quality.coerceIn(qualityRange)
                             }
-                            it.quality = it.quality.coerceIn(qualityRange)
                         }
                     }
                 }
@@ -34,19 +37,22 @@ class GildedRose(var items: Array<Item>) {
             }
 
             if (it.sellIn < 0) {
-                if (it.name != AGED_BRIE) {
-                    if (it.name != BACKSTAGE) {
-                        if (it.quality > 0) {
-                            if (it.name != SULFURAS) {
-                                it.quality = it.quality - 1
+                when {
+                    it.name != AGED_BRIE -> {
+                        if (it.name != BACKSTAGE) {
+                            if (it.quality > 0) {
+                                if (it.name != SULFURAS) {
+                                    it.quality = it.quality - 1
+                                }
                             }
+                        } else {
+                            it.quality = it.quality - it.quality
                         }
-                    } else {
-                        it.quality = it.quality - it.quality
                     }
-                } else {
-                    if (it.quality < 50) {
-                        it.quality = it.quality + 1
+                    else -> {
+                        if (it.quality < 50) {
+                            it.quality = it.quality + 1
+                        }
                     }
                 }
             }
