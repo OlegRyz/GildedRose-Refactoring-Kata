@@ -13,12 +13,13 @@ class AgedBrie(item: Item) : ItemWrapper(item) {
     val allowedQualityRange = Int.MIN_VALUE..50
     override fun degrade() {
         if (item.quality in allowedQualityRange) {
-            item.quality = item.quality + 1
-            if (item.sellIn <= 0) {
-                item.quality = item.quality + 1
-            }
-            item.quality = item.quality.coerceAtMost(50)
+            item.quality = (item.quality + qualityChange(item.sellIn)).coerceAtMost(50)
         }
+    }
+
+    private fun qualityChange(sellIn: Int) = when {
+        sellIn <= 0 -> 2
+        else -> 1
     }
 }
 
