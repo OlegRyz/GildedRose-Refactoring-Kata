@@ -23,7 +23,6 @@ class AgedBrie(item: Item) : ItemWrapper(item) {
 }
 
 class BackStage(item: Item) : ItemWrapper(item) {
-    private val qualityRange = 0..50
 
     override fun degrade() {
         if (item.quality < 50) {
@@ -32,7 +31,7 @@ class BackStage(item: Item) : ItemWrapper(item) {
                 in 0..5 -> 3
                 else -> 1
             }
-            item.quality = item.quality.coerceIn(qualityRange)
+            item.quality = item.quality.coerceAtMost(50)
             if (item.sellIn <= 0) {
                 item.quality = 0
             }
