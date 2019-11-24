@@ -4,17 +4,7 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         items.forEach {
-            when (it.name) {
-                AGED_BRIE ->
-                    AgedBrie(it)
-                BACKSTAGE ->
-                    BackStage(it)
-                SULFURAS ->
-                    Sulfuras(it)
-                else -> {
-                    SomeGood(it)
-                }
-            }.degrade()
+            wrap(it).degrade()
 
             moveSellInDate(it)
         }
