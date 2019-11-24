@@ -10,7 +10,8 @@ class GildedRose(var items: Array<Item>) {
                 }
                 BACKSTAGE ->
                     BackStage(it).degrade()
-                SULFURAS -> Unit
+                SULFURAS ->
+                    Sulfuras(it).degrade()
                 else -> {
                     SomeGood(it).degrade()
                 }
