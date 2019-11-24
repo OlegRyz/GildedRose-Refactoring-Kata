@@ -1,6 +1,6 @@
 package com.gildedrose
 
-class BackStage(private val item: Item): ItemWrapper {
+class BackStage(item: Item): ItemWrapper(item) {
     private val qualityRange = 0..50
 
     override fun degrade() {

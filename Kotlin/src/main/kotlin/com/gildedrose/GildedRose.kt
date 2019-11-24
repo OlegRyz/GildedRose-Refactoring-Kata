@@ -4,15 +4,10 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         items.forEach {
-            wrap(it).degrade()
-
-            moveSellInDate(it)
-        }
-    }
-
-    private fun moveSellInDate(it: Item) {
-        if (it.name != SULFURAS) {
-            it.sellIn = it.sellIn - 1
+            wrap(it).apply {
+                degrade()
+                moveSellInDate()
+            }
         }
     }
 

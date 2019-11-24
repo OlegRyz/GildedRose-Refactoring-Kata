@@ -1,6 +1,6 @@
 package com.gildedrose
 
-class SomeGood(val item: Item): ItemWrapper {
+class SomeGood(item: Item): ItemWrapper(item) {
     override fun degrade() {
         if (item.quality > 0) {
             item.quality = item.quality - 1

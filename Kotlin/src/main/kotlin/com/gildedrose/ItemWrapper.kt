@@ -14,6 +14,9 @@ fun wrap(it: Item): ItemWrapper {
     }
 }
 
-interface ItemWrapper {
-    fun degrade()
+abstract class ItemWrapper(val item: Item) {
+    abstract fun degrade()
+    open fun moveSellInDate() {
+        item.sellIn = item.sellIn - 1
+    }
 }
