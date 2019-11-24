@@ -21,7 +21,7 @@ class AgedBrie(item: Item) : ItemWrapper(item) {
 class BackStage(item: Item) : ItemWrapper(item) {
     override val allowedQualityRange = Int.MIN_VALUE..50
 
-    override fun qualityAfterSellIn(quality: Int) = 0
+    override fun qualityAfterExpiryDate(quality: Int) = 0
 
     override fun qualityChange(sellIn: Int) = when (sellIn) {
         in 6..10 -> 2
@@ -49,19 +49,31 @@ sealed class ItemWrapper(private val item: Item) {
                 "Currently overriding this range is allowed only for backward compatibility with legacy code.")
     open val allowedQualityRange = 0..50
 
+    private var sellIn: Int
+    get() = item.sellIn
+    set(value) {
+        item.sellIn = value
+    }
+
+    private var quality: Int
+        get() = item.quality
+        set(value) {
+            item.quality = value
+        }
+
     open fun moveSellInDate() {
-        item.sellIn = item.sellIn - 1
+        sellIn -= 1
     }
 
     abstract fun qualityChange(sellIn: Int): Int
 
-    open fun qualityAfterSellIn(quality: Int) = quality
+    open fun qualityAfterExpiryDate(quality: Int) = quality
 
     fun degrade() {
-        if (item.quality in allowedQualityRange) {
-            item.quality = (item.quality + qualityChange(item.sellIn)).coerceIn(allowedQualityRange)
-            if (item.sellIn <= 0) {
-                item.quality = qualityAfterSellIn(item.quality)
+        if (quality in allowedQualityRange) {
+            quality = (quality + qualityChange(sellIn)).coerceIn(allowedQualityRange)
+            if (sellIn <= 0) {
+                quality = qualityAfterExpiryDate(quality)
             }
         }
     }
