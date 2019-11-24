@@ -33,16 +33,23 @@ class GildedRose(var items: Array<Item>) {
                 it.sellIn = it.sellIn - 1
             }
 
-            if (it.sellIn < 0) {
-                when (it.name) {
-                    AGED_BRIE -> {
+
+            when (it.name) {
+                AGED_BRIE -> {
+                    if (it.sellIn < 0) {
                         if (it.quality < 50) {
                             it.quality = it.quality + 1
                         }
                     }
-                    BACKSTAGE -> it.quality = it.quality - it.quality
-                    SULFURAS -> Unit
-                    else -> {
+                }
+                BACKSTAGE -> {
+                    if (it.sellIn < 0) {
+                        it.quality = it.quality - it.quality
+                    }
+                }
+                SULFURAS -> Unit
+                else -> {
+                    if (it.sellIn < 0) {
                         if (it.quality > 0) {
                             it.quality = it.quality - 1
                         }
@@ -51,12 +58,9 @@ class GildedRose(var items: Array<Item>) {
             }
         }
     }
-
     companion object {
         const val AGED_BRIE = "Aged Brie"
         const val SULFURAS = "Sulfuras, Hand of Ragnaros"
         const val BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert"
     }
-
 }
-
