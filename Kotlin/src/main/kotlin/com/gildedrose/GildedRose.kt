@@ -6,8 +6,8 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         items.forEach {
-            when {
-                it.name == AGED_BRIE || it.name == BACKSTAGE -> {
+            when (it.name) {
+                AGED_BRIE, BACKSTAGE -> {
                     if (it.quality < 50) {
                         it.quality = it.quality + 1
 
