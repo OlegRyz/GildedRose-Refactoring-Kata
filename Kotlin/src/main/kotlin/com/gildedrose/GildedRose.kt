@@ -11,6 +11,11 @@ class GildedRose(var items: Array<Item>) {
                     if (it.quality < 50) {
                         it.quality = it.quality + 1
                     }
+                    if (it.sellIn <= 0) {
+                        if (it.quality < 50) {
+                            it.quality = it.quality + 1
+                        }
+                    }
                 }
                 BACKSTAGE ->
                     if (it.quality < 50) {
@@ -20,40 +25,24 @@ class GildedRose(var items: Array<Item>) {
                             else -> 1
                         }
                         it.quality = it.quality.coerceIn(qualityRange)
+                        if (it.sellIn <= 0) {
+                            it.quality = it.quality - it.quality
+                        }
                     }
                 SULFURAS -> Unit
                 else -> {
                     if (it.quality > 0) {
                         it.quality = it.quality - 1
                     }
-                }
-            }
-
-            moveSellInDate(it)
-
-
-            when (it.name) {
-                AGED_BRIE -> {
-                    if (it.sellIn < 0) {
-                        if (it.quality < 50) {
-                            it.quality = it.quality + 1
-                        }
-                    }
-                }
-                BACKSTAGE -> {
-                    if (it.sellIn < 0) {
-                        it.quality = it.quality - it.quality
-                    }
-                }
-                SULFURAS -> Unit
-                else -> {
-                    if (it.sellIn < 0) {
+                    if (it.sellIn <= 0) {
                         if (it.quality > 0) {
                             it.quality = it.quality - 1
                         }
                     }
                 }
             }
+
+            moveSellInDate(it)
         }
     }
 
