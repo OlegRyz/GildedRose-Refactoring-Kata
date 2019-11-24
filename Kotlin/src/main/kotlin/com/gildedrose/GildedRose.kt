@@ -12,14 +12,7 @@ class GildedRose(var items: Array<Item>) {
                     BackStage(it).degrade()
                 SULFURAS -> Unit
                 else -> {
-                    if (it.quality > 0) {
-                        it.quality = it.quality - 1
-                    }
-                    if (it.sellIn <= 0) {
-                        if (it.quality > 0) {
-                            it.quality = it.quality - 1
-                        }
-                    }
+                    SomeGood(it).degrade()
                 }
             }
 
