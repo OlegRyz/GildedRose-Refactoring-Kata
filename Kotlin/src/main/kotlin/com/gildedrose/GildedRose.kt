@@ -7,22 +7,23 @@ class GildedRose(var items: Array<Item>) {
     fun updateQuality() {
         items.forEach {
             when (it.name) {
-                AGED_BRIE, BACKSTAGE -> {
+                AGED_BRIE -> {
                     if (it.quality < 50) {
                         it.quality = it.quality + 1
-
-                        if (it.name == BACKSTAGE) {
-                            if (it.quality < 50) {
-                                it.quality = it.quality + when (it.sellIn) {
-                                    in 6..10 -> 1
-                                    in 0..5 -> 2
-                                    else -> 0
-                                }
-                                it.quality = it.quality.coerceIn(qualityRange)
-                            }
-                        }
                     }
                 }
+                BACKSTAGE ->
+                    if (it.quality < 50) {
+                        it.quality = it.quality + 1
+                        if (it.quality < 50) {
+                            it.quality = it.quality + when (it.sellIn) {
+                                in 6..10 -> 1
+                                in 0..5 -> 2
+                                else -> 0
+                            }
+                            it.quality = it.quality.coerceIn(qualityRange)
+                        }
+                    }
                 else -> {
                     if (it.quality > 0) {
                         if (it.name != SULFURAS) {
