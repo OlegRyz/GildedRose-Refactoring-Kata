@@ -85,4 +85,13 @@ class AgedBrieTest {
 
         assertEquals(-1, gildedRose.items[0].quality)
     }
+
+    @Test
+    fun agedBrie_withNegativeQualityAndSellInZero_doesIncreaseQualityTwiceFaster() {
+        val gildedRose = GildedRose(arrayOf(Item("Aged Brie", 0, -4)))
+
+        gildedRose.updateQuality()
+
+        assertEquals(-2, gildedRose.items[0].quality)
+    }
 }
