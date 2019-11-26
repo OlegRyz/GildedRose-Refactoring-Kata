@@ -3,7 +3,7 @@ package com.gildedrose
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class SulfurasTest {
+class LegacySulfurasTest {
 
     @Test
     fun sulfuras_always_keepsSellInConstant() {

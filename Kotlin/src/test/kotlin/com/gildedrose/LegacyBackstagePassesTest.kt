@@ -3,7 +3,7 @@ package com.gildedrose
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class BackstagePassesTest {
+class LegacyBackstagePassesTest {
 
     @Test
     fun backstagePasses_always_reducesSellInTerm() {

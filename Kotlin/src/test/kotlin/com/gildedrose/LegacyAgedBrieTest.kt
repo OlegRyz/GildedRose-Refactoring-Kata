@@ -3,7 +3,7 @@ package com.gildedrose
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class AgedBrieTest {
+class LegacyAgedBrieTest {
 
     @Test
     fun agedBrie_always_reducesSellInTerm() {
