@@ -69,7 +69,7 @@ sealed class ItemWrapper(private val item: Item) {
 
     abstract fun qualityChange(sellIn: Int): Int
 
-    open fun qualityAfterExpiryDate(quality: Int) = quality
+    protected open fun qualityAfterExpiryDate(quality: Int) = quality
 
     fun degrade() {
         if (quality in allowedQualityRange) {
@@ -79,7 +79,6 @@ sealed class ItemWrapper(private val item: Item) {
             }
         }
     }
-
 
     companion object {
         const val MIN_QUALITY = 0
