@@ -1,10 +1,14 @@
 package com.gildedrose
 
+import com.gildedrose.ItemWrapper.Companion.AGED_BRIE
+import com.gildedrose.ItemWrapper.Companion.BACKSTAGE
+import com.gildedrose.ItemWrapper.Companion.SULFURAS
+
 fun wrap(it: Item): ItemWrapper {
     return when (it.name) {
-        GildedRose.AGED_BRIE -> AgedBrie(it)
-        GildedRose.BACKSTAGE -> BackStage(it)
-        GildedRose.SULFURAS -> Sulfuras(it)
+        AGED_BRIE -> AgedBrie(it)
+        BACKSTAGE -> BackStage(it)
+        SULFURAS -> Sulfuras(it)
         else -> SomeGood(it)
     }
 }
@@ -83,5 +87,8 @@ sealed class ItemWrapper(private val item: Item) {
     companion object {
         const val MIN_QUALITY = 0
         const val MAX_QUALITY = 50
+        const val AGED_BRIE = "Aged Brie"
+        const val SULFURAS = "Sulfuras, Hand of Ragnaros"
+        const val BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert"
     }
 }
