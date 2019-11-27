@@ -3,7 +3,7 @@ package com.gildedrose
 import org.junit.Assert.*
 import org.junit.Test
 
-class ItemWrapperKtTest {
+class ItemWrapperStrategyKtTest {
     @Test
     fun wrap_forAgedBrie_returnsAgedBrieInstance() {
         val instance = wrap(Item("Aged Brie", 10, 10))
