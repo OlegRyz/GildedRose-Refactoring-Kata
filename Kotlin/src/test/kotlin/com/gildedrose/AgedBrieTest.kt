@@ -14,7 +14,17 @@ class AgedBrieTest {
     }
 
     @Test
-    fun qualityChange_returns() {
+    fun qualityChange_beforeExpiration_returnsOne() {
+        assertEquals(1, agedBrie.qualityChange(5))
+    }
 
+    @Test
+    fun qualityChange_afterExpiration_returnsTwo() {
+        assertEquals(2, agedBrie.qualityChange(-5))
+    }
+
+    @Test
+    fun qualityChange_inExpirationDay_returnsTwo() {
+        assertEquals(2, agedBrie.qualityChange(0))
     }
 }
