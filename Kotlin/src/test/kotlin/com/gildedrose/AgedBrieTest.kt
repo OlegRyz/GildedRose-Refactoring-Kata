@@ -10,7 +10,7 @@ class AgedBrieTest {
 
     @Test
     fun getAllowedQualityRange_always_returnsLeftOpenRange() {
-        assertEquals(agedBrie.allowedQualityRange, Int.MIN_VALUE..50)
+        assertEquals(Int.MIN_VALUE..50, agedBrie.allowedQualityRange)
     }
 
     @Test
