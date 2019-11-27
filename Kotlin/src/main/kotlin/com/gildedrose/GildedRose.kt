@@ -2,12 +2,10 @@ package com.gildedrose
 
 class GildedRose(var items: Array<Item>) {
 
-    fun updateQuality() {
-        items.forEach {
-            wrap(it).apply {
-                degrade()
-                moveSellInDate()
-            }
+    fun updateQuality() = with(items.map { ItemWrapper(it) }) {
+        forEach {
+            it.degrade()
+            it.moveSellInDate()
         }
     }
 }

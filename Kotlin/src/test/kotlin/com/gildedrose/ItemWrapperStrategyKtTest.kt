@@ -4,31 +4,36 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ItemWrapperStrategyKtTest {
-    @Test
-    fun wrap_forAgedBrie_returnsAgedBrieInstance() {
-        val instance = wrap(Item("Aged Brie", 10, 10))
 
-        assertTrue(instance is AgedBrie)
+    @Test
+    fun chooseStrategy_forAgedBrie_returnsAgedBrieInstance() {
+        val strategy = Item("Aged Brie", 10, 10)
+                .chooseStrategy()
+
+        assertTrue(strategy is AgedBrie)
     }
 
     @Test
-    fun wrap_forBackStage_returnsBackstageInstance() {
-        val instance = wrap(Item("Backstage passes to a TAFKAL80ETC concert", 10, 10))
+    fun chooseStrategy_forBackStage_returnsBackstageInstance() {
+        val strategy = Item("Backstage passes to a TAFKAL80ETC concert", 10, 10)
+                .chooseStrategy()
 
-        assertTrue(instance is BackStage)
+        assertTrue(strategy is BackStage)
     }
 
     @Test
-    fun wrap_forSulfuras_returnsSulfurasInstance() {
-        val instance = wrap(Item("Sulfuras, Hand of Ragnaros", 10, 10))
+    fun chooseStrategy_forSulfuras_returnsSulfurasInstance() {
+        val strategy = Item("Sulfuras, Hand of Ragnaros", 10, 10)
+                .chooseStrategy()
 
-        assertTrue(instance is Sulfuras)
+        assertTrue(strategy is Sulfuras)
     }
 
     @Test
-    fun wrap_forOtherGoods_returnsSomeGoodsInstance() {
-        val instance = wrap(Item("sdafsd", 10, 10))
+    fun chooseStrategy_forOtherGoods_returnsSomeGoodsInstance() {
+        val strategy = Item("sdafsd", 10, 10)
+                .chooseStrategy()
 
-        assertTrue(instance is SomeGood)
+        assertTrue(strategy is SomeGood)
     }
 }
