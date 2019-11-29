@@ -4,7 +4,8 @@ typealias SellIn = Int
 
 val SellIn.isExpired get() = this <= 0
 
-class ItemWrapper(private val item: Item) {
+class ItemWrapper(private val item: Item,
+                  injectedChooseStrategy: Item.() -> ItemWrapperStrategy = { this.chooseStrategy() } ) {
 
     private var sellIn: SellIn
         get() = item.sellIn
@@ -18,7 +19,7 @@ class ItemWrapper(private val item: Item) {
             item.quality = value
         }
 
-    private val strategy = item.chooseStrategy()
+    private val strategy = item.injectedChooseStrategy()
 
     fun degrade() = with(strategy) {
         if (quality in allowedQualityRange) {

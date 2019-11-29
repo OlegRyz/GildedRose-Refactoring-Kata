@@ -67,7 +67,7 @@ interface ItemWrapperStrategy {
                 "Currently overriding this range is allowed only for backward compatibility with legacy code.")
     val allowedQualityRange: IntRange
 
-    fun qualityChange(sellIn: Int): Int
+    fun qualityChange(sellIn: SellIn): Int
 
     fun qualityAfterExpiryDate(quality: Int): Int
 
