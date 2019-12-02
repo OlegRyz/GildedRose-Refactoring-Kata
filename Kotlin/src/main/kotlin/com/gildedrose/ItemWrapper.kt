@@ -16,29 +16,23 @@ interface ItemActions {
 private class ItemWrapper(private val item: Item,
                           private val strategy: ItemWrapperStrategy) : ItemActions {
 
-    private var sellIn: SellIn
+    private val sellIn: SellIn
         get() = item.sellIn
-        set(value) {
-            item.sellIn = value
-        }
 
-    private var quality: Int
+    private val quality: Int
         get() = item.quality
-        set(value) {
-            item.quality = value
-        }
 
     override fun degrade() = with(strategy) {
         if (quality in allowedQualityRange) {
-            quality = (quality + qualityChange(sellIn)).coerceIn(allowedQualityRange)
+            item.quality = (quality + qualityChange(sellIn)).coerceIn(allowedQualityRange)
             if (sellIn.isExpired) {
-                quality = qualityAfterExpiryDate(quality)
+                item.quality = qualityAfterExpiryDate(quality)
             }
         }
     }
 
     override fun moveSellInDate() = with(strategy) {
-        sellIn = moveSellInDate(sellIn)
+        item.sellIn = moveSellInDate(sellIn)
     }
 
 }
