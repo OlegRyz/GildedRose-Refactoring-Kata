@@ -52,13 +52,11 @@ class DefaultStrategy : ItemWrapperStrategy {
 
 }
 
-fun Item.chooseStrategy(): ItemWrapperStrategy {
-    return when (name) {
-        "Aged Brie" -> AgedBrie()
-        "Backstage passes to a TAFKAL80ETC concert" -> BackStage()
-        "Sulfuras, Hand of Ragnaros" -> Sulfuras()
-        else -> SomeGood()
-    }
+fun Item.chooseStrategy() = when (name) {
+    "Aged Brie" -> AgedBrie()
+    "Backstage passes to a TAFKAL80ETC concert" -> BackStage()
+    "Sulfuras, Hand of Ragnaros" -> Sulfuras()
+    else -> SomeGood()
 }
 
 val Item.isExpired get() = this.sellIn.isExpired
