@@ -16,7 +16,9 @@ class ItemWrapperTest {
     lateinit var mockStrategy: ItemWrapperStrategy
     @Mock
     lateinit var item: Item
-    lateinit var wrapper: ItemWrapper
+    lateinit var wrapper: ItemActions
+
+    val factory = ItemActionsFactory()
 
     @Before
     fun setUp() {
@@ -25,7 +27,7 @@ class ItemWrapperTest {
         whenever(mockStrategy.qualityAfterExpiryDate(any())).thenReturn(-11)
         whenever(mockStrategy.qualityChange(any())).thenReturn(3)
         item = Item("asdf", 10, 30)
-        wrapper = ItemWrapper(item) { mockStrategy }
+        wrapper = factory.wrapItem(item, mockStrategy)
     }
 
     @Test
@@ -45,7 +47,7 @@ class ItemWrapperTest {
     @Test
     fun degrade_whenSellInIsExpiring_setsQualityToQualityAfterExpireDateValue() {
         val item = Item("asdf", 0, 30)
-        val wrapper = ItemWrapper(item) { mockStrategy }
+        val wrapper = factory.wrapItem(item, mockStrategy)
 
         wrapper.degrade()
 
@@ -55,7 +57,7 @@ class ItemWrapperTest {
     @Test
     fun degrade_whenSellInIsExpired_setsQualityToQualityAfterExpireDateValue() {
         val item = Item("asdf", -2, 30)
-        val wrapper = ItemWrapper(item) { mockStrategy }
+        val wrapper = factory.wrapItem(item, mockStrategy)
 
         wrapper.degrade()
 
@@ -66,7 +68,7 @@ class ItemWrapperTest {
     fun degrade_whenSellInIsExpiring_passesQualityToQualityAfterExpireDate() {
         val item = Item("asdf", 0, 30)
         whenever(mockStrategy.qualityChange(any())).thenReturn(0)
-        val wrapper = ItemWrapper(item) { mockStrategy }
+        val wrapper = factory.wrapItem(item, mockStrategy)
 
         wrapper.degrade()
 
@@ -77,7 +79,7 @@ class ItemWrapperTest {
     fun degrade_whenSellInIsExpired_passesQualityToQualityAfterExpireDate() {
         val item = Item("asdf", -2, 30)
         whenever(mockStrategy.qualityChange(any())).thenReturn(0)
-        val wrapper = ItemWrapper(item) { mockStrategy }
+        val wrapper = factory.wrapItem(item, mockStrategy)
 
         wrapper.degrade()
 
@@ -87,7 +89,7 @@ class ItemWrapperTest {
     @Test
     fun degrade_whenQualityIsMoreThanRange_doesNotDoAnything() {
         val item = Item("asdf", 10, 40)
-        val wrapper = ItemWrapper(item) { mockStrategy }
+        val wrapper = factory.wrapItem(item, mockStrategy)
 
         wrapper.degrade()
 
@@ -98,7 +100,7 @@ class ItemWrapperTest {
     @Test
     fun degrade_whenQualityIsLessThanRange_doesNotDoAnything() {
         val item = Item("asdf", 10, -2)
-        val wrapper = ItemWrapper(item) { mockStrategy }
+        val wrapper = factory.wrapItem(item, mockStrategy)
 
         wrapper.degrade()
 

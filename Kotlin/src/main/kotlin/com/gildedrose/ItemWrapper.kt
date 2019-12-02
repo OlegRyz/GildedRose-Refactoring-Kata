@@ -4,8 +4,17 @@ typealias SellIn = Int
 
 val SellIn.isExpired get() = this <= 0
 
-class ItemWrapper(private val item: Item,
-                  injectedChooseStrategy: Item.() -> ItemWrapperStrategy = { this.chooseStrategy() } ) {
+class ItemActionsFactory {
+    fun wrapItem(item: Item, strategy: ItemWrapperStrategy = item.chooseStrategy()): ItemActions = ItemWrapper(item, strategy)
+}
+
+interface ItemActions {
+    fun degrade()
+    fun moveSellInDate()
+}
+
+private class ItemWrapper(private val item: Item,
+                          private val strategy: ItemWrapperStrategy) : ItemActions {
 
     private var sellIn: SellIn
         get() = item.sellIn
@@ -19,9 +28,7 @@ class ItemWrapper(private val item: Item,
             item.quality = value
         }
 
-    private val strategy = item.injectedChooseStrategy()
-
-    fun degrade() = with(strategy) {
+    override fun degrade() = with(strategy) {
         if (quality in allowedQualityRange) {
             quality = (quality + qualityChange(sellIn)).coerceIn(allowedQualityRange)
             if (sellIn.isExpired) {
@@ -30,7 +37,7 @@ class ItemWrapper(private val item: Item,
         }
     }
 
-    fun moveSellInDate() = with(strategy) {
+    override fun moveSellInDate() = with(strategy) {
         sellIn = moveSellInDate(sellIn)
     }
 
