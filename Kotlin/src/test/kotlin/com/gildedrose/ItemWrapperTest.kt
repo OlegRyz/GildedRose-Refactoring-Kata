@@ -38,6 +38,14 @@ class ItemWrapperTest {
     }
 
     @Test
+    fun degrade_whenQualityIsInRangeAndCalledTwice_addsStrategyQualityChange() {
+        wrapper.degrade()
+        wrapper.degrade()
+
+        assertEquals(30 + 3 + 3, item.quality)
+    }
+
+    @Test
     fun degrade_whenQualityIsInRange_passesSellInToStrategyQualityChange() {
         wrapper.degrade()
 
@@ -112,6 +120,17 @@ class ItemWrapperTest {
         wrapper.moveSellInDate()
 
         assertEquals(7, item.sellIn)
+    }
+
+    @Test
+    fun moveSellInDate_calledTwice_takesValueFromStrategyMoveSellIn() {
+        whenever(mockStrategy.moveSellInDate(any())).thenReturn(9)
+        whenever(mockStrategy.moveSellInDate(9)).thenReturn(8)
+
+        wrapper.moveSellInDate()
+        wrapper.moveSellInDate()
+
+        assertEquals(8, item.sellIn)
     }
 
     @Test
