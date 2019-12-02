@@ -18,15 +18,15 @@ private class ItemWrapper(private val item: Item,
             return
         }
 
-        if (resetQualityIfExpired && item.sellIn.isExpired) {
+        if (shouldResetQualityIfExpired && item.isExpired) {
             item.quality = 0
         } else {
             item.quality = (item.quality + qualityChange(item.sellIn)).coerceIn(allowedQualityRange)
         }
     }
 
-    override fun moveSellInDate() = with(strategy) {
-        item.sellIn = moveSellInDate(item.sellIn)
+    override fun moveSellInDate() {
+        item.sellIn = strategy.moveSellInDate(item.sellIn)
     }
 
 }

@@ -24,7 +24,7 @@ class ItemWrapperTest {
     fun setUp() {
         whenever(mockStrategy.moveSellInDate(any())).thenReturn(7)
         whenever(mockStrategy.allowedQualityRange).thenReturn(0..37)
-        whenever(mockStrategy.resetQualityIfExpired).thenReturn(false)
+        whenever(mockStrategy.shouldResetQualityIfExpired).thenReturn(false)
         whenever(mockStrategy.qualityChange(any())).thenReturn(3)
         item = Item("asdf", 10, 30)
         wrapper = factory.wrapItem(item, mockStrategy)
@@ -56,7 +56,7 @@ class ItemWrapperTest {
     fun degrade_whenSellInIsExpiring_setsQualityToQualityAfterExpireDateValue() {
         val item = Item("asdf", 0, 30)
         val wrapper = factory.wrapItem(item, mockStrategy)
-        whenever(mockStrategy.resetQualityIfExpired).thenReturn(true)
+        whenever(mockStrategy.shouldResetQualityIfExpired).thenReturn(true)
 
         wrapper.degrade()
 
@@ -67,7 +67,7 @@ class ItemWrapperTest {
     fun degrade_whenSellInIsExpired_setsQualityToQualityAfterExpireDateValue() {
         val item = Item("asdf", -2, 30)
         val wrapper = factory.wrapItem(item, mockStrategy)
-        whenever(mockStrategy.resetQualityIfExpired).thenReturn(true)
+        whenever(mockStrategy.shouldResetQualityIfExpired).thenReturn(true)
 
         wrapper.degrade()
 

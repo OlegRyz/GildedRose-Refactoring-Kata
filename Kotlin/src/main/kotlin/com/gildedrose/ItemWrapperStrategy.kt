@@ -3,13 +3,10 @@ package com.gildedrose
 import com.gildedrose.DefaultStrategy.Companion.MAX_QUALITY
 import com.gildedrose.DefaultStrategy.Companion.MIN_QUALITY
 
-typealias SellIn = Int
-val SellIn.isExpired get() = this <= 0
-
 class AgedBrie : ItemWrapperStrategy by DefaultStrategy() {
     override val allowedQualityRange = Int.MIN_VALUE..MAX_QUALITY
 
-    override fun qualityChange(sellIn: SellIn) = when {
+    override fun qualityChange(sellIn: Int) = when {
         sellIn.isExpired -> 2
         else -> 1
     }
@@ -18,9 +15,9 @@ class AgedBrie : ItemWrapperStrategy by DefaultStrategy() {
 class BackStage : ItemWrapperStrategy by DefaultStrategy() {
     override val allowedQualityRange = Int.MIN_VALUE..MAX_QUALITY
 
-    override val resetQualityIfExpired = true
+    override val shouldResetQualityIfExpired = true
 
-    override fun qualityChange(sellIn: SellIn) = when (sellIn) {
+    override fun qualityChange(sellIn: Int) = when (sellIn) {
         in 1..5 -> 3
         in 6..10 -> 2
         else -> 1
@@ -32,21 +29,21 @@ class SomeGood : ItemWrapperStrategy by DefaultStrategy() {
 }
 
 class Sulfuras : ItemWrapperStrategy by DefaultStrategy() {
-    override fun moveSellInDate(sellIn: SellIn) = sellIn
+    override fun moveSellInDate(sellIn: Int) = sellIn
     override fun qualityChange(sellIn: Int) = 0
 }
 
 class DefaultStrategy : ItemWrapperStrategy {
     override val allowedQualityRange = MIN_QUALITY..MAX_QUALITY
 
-    override fun qualityChange(sellIn: SellIn) = when {
+    override fun qualityChange(sellIn: Int) = when {
         sellIn.isExpired -> -2
         else -> -1
     }
 
-    override val resetQualityIfExpired = false
+    override val shouldResetQualityIfExpired = false
 
-    override fun moveSellInDate(sellIn: SellIn) = sellIn - 1
+    override fun moveSellInDate(sellIn: Int) = sellIn - 1
 
     companion object {
         const val MIN_QUALITY = 0
@@ -64,15 +61,19 @@ fun Item.chooseStrategy(): ItemWrapperStrategy {
     }
 }
 
+val Item.isExpired get() = this.sellIn.isExpired
+
+private val Int.isExpired get() = this <= 0
+
 interface ItemWrapperStrategy {
 
     @Deprecated("Allowed quality range should not be overridden anymore. " +
                 "Currently overriding this range is allowed only for backward compatibility with legacy code.")
     val allowedQualityRange: IntRange
 
-    fun qualityChange(sellIn: SellIn): Int
+    fun qualityChange(sellIn: Int): Int
 
-    val resetQualityIfExpired: Boolean
+    val shouldResetQualityIfExpired: Boolean
 
-    fun moveSellInDate(sellIn: SellIn): Int
+    fun moveSellInDate(sellIn: Int): Int
 }
