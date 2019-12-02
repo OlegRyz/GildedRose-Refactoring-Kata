@@ -14,11 +14,6 @@ class BackStageTest {
     }
 
     @Test
-    fun qualityAfterExpiryDate_always_returnsZero() {
-        assertEquals(0, backStage.qualityAfterExpiryDate(10))
-    }
-
-    @Test
     fun qualityChange_whenSellInIsOne_returnsThree() {
         assertEquals(3, backStage.qualityChange(1))
     }

@@ -3,6 +3,9 @@ package com.gildedrose
 import com.gildedrose.DefaultStrategy.Companion.MAX_QUALITY
 import com.gildedrose.DefaultStrategy.Companion.MIN_QUALITY
 
+typealias SellIn = Int
+val SellIn.isExpired get() = this <= 0
+
 class AgedBrie : ItemWrapperStrategy by DefaultStrategy() {
     override val allowedQualityRange = Int.MIN_VALUE..MAX_QUALITY
 
@@ -15,7 +18,7 @@ class AgedBrie : ItemWrapperStrategy by DefaultStrategy() {
 class BackStage : ItemWrapperStrategy by DefaultStrategy() {
     override val allowedQualityRange = Int.MIN_VALUE..MAX_QUALITY
 
-    override fun qualityAfterExpiryDate(quality: Int) = 0
+    override val resetQualityIfExpired = true
 
     override fun qualityChange(sellIn: SellIn) = when (sellIn) {
         in 1..5 -> 3
@@ -41,7 +44,7 @@ class DefaultStrategy : ItemWrapperStrategy {
         else -> -1
     }
 
-    override fun qualityAfterExpiryDate(quality: Int) = quality
+    override val resetQualityIfExpired = false
 
     override fun moveSellInDate(sellIn: SellIn) = sellIn - 1
 
@@ -69,7 +72,7 @@ interface ItemWrapperStrategy {
 
     fun qualityChange(sellIn: SellIn): Int
 
-    fun qualityAfterExpiryDate(quality: Int): Int
+    val resetQualityIfExpired: Boolean
 
     fun moveSellInDate(sellIn: SellIn): Int
 }

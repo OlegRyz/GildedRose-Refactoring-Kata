@@ -24,7 +24,7 @@ class ItemWrapperTest {
     fun setUp() {
         whenever(mockStrategy.moveSellInDate(any())).thenReturn(7)
         whenever(mockStrategy.allowedQualityRange).thenReturn(0..37)
-        whenever(mockStrategy.qualityAfterExpiryDate(any())).thenReturn(-11)
+        whenever(mockStrategy.resetQualityIfExpired).thenReturn(false)
         whenever(mockStrategy.qualityChange(any())).thenReturn(3)
         item = Item("asdf", 10, 30)
         wrapper = factory.wrapItem(item, mockStrategy)
@@ -56,42 +56,22 @@ class ItemWrapperTest {
     fun degrade_whenSellInIsExpiring_setsQualityToQualityAfterExpireDateValue() {
         val item = Item("asdf", 0, 30)
         val wrapper = factory.wrapItem(item, mockStrategy)
+        whenever(mockStrategy.resetQualityIfExpired).thenReturn(true)
 
         wrapper.degrade()
 
-        assertEquals(-11, item.quality)
+        assertEquals(0, item.quality)
     }
 
     @Test
     fun degrade_whenSellInIsExpired_setsQualityToQualityAfterExpireDateValue() {
         val item = Item("asdf", -2, 30)
         val wrapper = factory.wrapItem(item, mockStrategy)
+        whenever(mockStrategy.resetQualityIfExpired).thenReturn(true)
 
         wrapper.degrade()
 
-        assertEquals(-11, item.quality)
-    }
-
-    @Test
-    fun degrade_whenSellInIsExpiring_passesQualityToQualityAfterExpireDate() {
-        val item = Item("asdf", 0, 30)
-        whenever(mockStrategy.qualityChange(any())).thenReturn(0)
-        val wrapper = factory.wrapItem(item, mockStrategy)
-
-        wrapper.degrade()
-
-        verify(mockStrategy).qualityAfterExpiryDate(30)
-    }
-
-    @Test
-    fun degrade_whenSellInIsExpired_passesQualityToQualityAfterExpireDate() {
-        val item = Item("asdf", -2, 30)
-        whenever(mockStrategy.qualityChange(any())).thenReturn(0)
-        val wrapper = factory.wrapItem(item, mockStrategy)
-
-        wrapper.degrade()
-
-        verify(mockStrategy).qualityAfterExpiryDate(30)
+        assertEquals(0, item.quality)
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.gildedrose
 
-import jdk.nashorn.internal.runtime.Undefined
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -27,11 +26,6 @@ class DefaultStrategyTest {
     @Test
     fun qualityChange_inExpirationDay_returnsMinusTwo() {
         assertEquals(-2, defaultStrategy.qualityChange(0))
-    }
-
-    @Test
-    fun qualityAfterExpiryDate_always_keepsTheSameValue() {
-        assertEquals(15, defaultStrategy.qualityAfterExpiryDate(15))
     }
 
     @Test
