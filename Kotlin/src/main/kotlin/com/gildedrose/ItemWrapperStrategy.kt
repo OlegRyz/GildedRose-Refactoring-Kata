@@ -57,10 +57,11 @@ class DefaultStrategy : ItemWrapperStrategy {
 
 }
 
-fun Item.chooseStrategy() = when (name) {
-    "Aged Brie" -> AgedBrie()
-    "Backstage passes to a TAFKAL80ETC concert" -> BackStage()
-    "Sulfuras, Hand of Ragnaros" -> Sulfuras()
+fun Item.chooseStrategy() = when {
+    name == "Aged Brie" -> AgedBrie()
+    name == "Backstage passes to a TAFKAL80ETC concert" -> BackStage()
+    name == "Sulfuras, Hand of Ragnaros" -> Sulfuras()
+    name.startsWith("Conjured", ignoreCase = true) -> Conjured()
     else -> SomeGood()
 }
 
