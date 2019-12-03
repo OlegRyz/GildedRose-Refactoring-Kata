@@ -36,4 +36,20 @@ class ItemWrapperStrategyKtTest {
 
         assertTrue(strategy is SomeGood)
     }
+
+    @Test
+    fun chooseStrategy_forConjuredGoods_returnsConjuredGoodsInstance() {
+        val strategy = Item("Conjured", 10, 10)
+                .chooseStrategy()
+
+        assertTrue(strategy is Conjured)
+    }
+
+    @Test
+    fun chooseStrategy_forConjuredManaCake_returnsConjuredGoodsInstance() {
+        val strategy = Item("Conjured Mana Cake", 10, 10)
+                .chooseStrategy()
+
+        assertTrue(strategy is Conjured)
+    }
 }
