@@ -33,6 +33,8 @@ class Sulfuras : ItemWrapperStrategy by DefaultStrategy() {
     override fun qualityChange(sellIn: Int) = 0
 }
 
+class Conjured : ItemWrapperStrategy by DefaultStrategy()
+
 class DefaultStrategy : ItemWrapperStrategy {
     override val allowedQualityRange = MIN_QUALITY..MAX_QUALITY
 
