@@ -1,7 +1,7 @@
 # GildedRose-Refactoring-Kata
 
-My solution to the Kata. Currently it is solved in **Kotlin**. 
+My solution to the Kata in **Kotlin**. 
 
-If you want to look at this solution then navigate to corresponding folder and check README.md there for further instructions/explanations
+Navigate to Kotlin folder and check README.md there for further instructions/explanations
 
-Original readme is called README_original.md
+Original readme from kata is called README_original.md
